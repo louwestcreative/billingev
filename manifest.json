@@ -1,22 +1,24 @@
 {
-  "name": "Toggl Hours Tracker",
-  "details": "Track hours, tasks, due dates, categories, and notes inside Trello cards.",
-  "icon": {
-    "url": "icon.png"
-  },
+  "manifest_version": 1,
+  "name": "Trello Billing Power-Up",
+  "description": "Track payments, owed amounts, and billing info per card.",
   "author": "Lou West Creative",
-  "capabilities": [
-    "card-buttons",
-    "card-badges",
-    "card-detail-badges",
-    "card-back-section"
-  ],
-  "connectors": {},
-  "iframe": {
-    "url": "index.html",
-    "sandbox": {
-      "allow-scripts": true,
-      "allow-same-origin": true
+  "icon": {
+    "url": "https://louwestcreative.github.io/billingev/icons/billing-icon.png",
+    "size": 64
+  },
+  "api_version": 1,
+  "permissions": ["read", "write", "account"],
+  "card_buttons": {
+    "text": "Add Payment",
+    "callback": "addPaymentCallback"
+  },
+  "capabilities": {
+    "card-buttons": {
+      "callback": "cardButtonsCallback"
+    },
+    "card-badges": {
+      "callback": "cardBadgesCallback"
     }
   }
 }

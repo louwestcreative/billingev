@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Add Payment</title>
+</head>
+<body>
+  <form id="paymentForm">
+    <label>
+      Amount:
+      <input type="number" step="0.01" id="amount" required />
+    </label>
+    <br />
+    <label>
+      Reason:
+      <input type="text" id="reason" required />
+    </label>
+    <br />
+    <label>
+      Date:
+      <input type="date" id="date" required />
+    </label>
+    <br />
+    <button type="submit">Add Payment</button>
+  </form>
+
+  <script src="https://p.trellocdn.com/power-up.min.js"></script>
+  <script>
+    const t = TrelloPowerUp.iframe();
+
+    document.getElementById('date').valueAsDate = new Date();
+
+    document
+      .getElementById('paymentForm')
+      .addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const amount = parseFloat(
+          document.getElementById('amount').value
+        );
+        const reason = document.getElementById('reason').value.trim();
+        const date = document.getElementById('date').value;
+
+        if (!amount || amount <= 0) {
+          alert('Please enter a valid amount');
+          return;
+        }
+        if (!reason) {
+          alert('Please enter a reason');
+          return;
+        }
+
+        const payments = (await t.get('card', 'shared', 'payments')) || [];
+        payments.push({ amount, reason, date });
+
+        await t.set('card', 'shared', 'payments', payments);
+        t.closePopup();
+      });
+  </script>
+</body>
+</html>
